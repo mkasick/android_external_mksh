@@ -1128,6 +1128,7 @@ j_waitj(Job *j,
 			if (j->state == PSTOPPED &&
 			    (j->saved_ttypgrp = tcgetpgrp(tty_fd)) >= 0)
 				j->flags |= JF_SAVEDTTYPGRP;
+			ioctl(tty_fd, TIOCSCTTY, 0);
 			if (tcsetpgrp(tty_fd, kshpgrp) < 0)
 				warningf(true, "%s %s(%d, %ld) %s: %s",
 				    "j_waitj:", "tcsetpgrp", tty_fd,
